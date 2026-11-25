@@ -232,9 +232,12 @@ guide: |
     the fourth uses Qwen Sparse Attention for precise long-range retrieval.
   - **Gated Residual:** four residual branches dynamically control cross-layer reads
     and writes.
-  - **N-gram Embedding:** a 51B lookup memory adds capacity with little per-token
-    compute and can be asynchronously offloaded to host memory. (note that offload
-    currently only runs on Nvidia devices)
+  - **N-gram Embedding:** a 51B lookup table adds capacity with little
+    per-token compute. Its weights can be offloaded to host memory on NVIDIA
+    and on supported vLLM-Ascend configurations. On Ascend, set `cpu_offload`
+    to `true` in `--engram-config`. See the
+    [vLLM-Ascend deployment guide](https://docs.vllm.ai/projects/ascend/en/latest/tutorials/models/Qwen3.8-Flash-Next.html#51-single-node-online-deployment)
+    for checkpoint and host-memory requirements and DP sharing settings.
   - **MTP:** the built-in Multi-Token Prediction module supports speculative decoding.
 
   The checkpoint natively supports 262,144 tokens. Qwen reports that QSA reaches up
